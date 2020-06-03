@@ -18,6 +18,8 @@ credentials = [
   }
 ]
 
+branch_name = ENV["BRANCH_NAME"]
+
 # Full name of the repo you want to create pull requests for.
 repo_name = ENV["PROJECT_PATH"] # namespace/project
 
@@ -99,7 +101,7 @@ else
     provider: "github",
     repo: repo_name,
     directory: directory,
-    branch: nil,
+    branch: branch_name,
   )
 end
 
