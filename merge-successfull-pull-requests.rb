@@ -21,6 +21,6 @@ pull_requests.each do |pull|
     status = client.combined_status(repo_name, pull.head.ref)
     if status.state == "success" and users.any?(pull.user.login)
         puts "Merging #{pull.title}"
-        client.merge_pull_request(repo_name, pull.number)
+	    client.merge_pull_request(repo_name, pull.number, commit_message = '', :merge_method => 'rebase')
     end
 end
