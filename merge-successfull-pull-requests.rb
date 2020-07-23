@@ -17,9 +17,10 @@ client = Octokit::Client.new(:login => 'x-access-token', :password => ENV["GITHU
 pull_requests = client.pull_requests(ENV["PROJECT_PATH"], :state => 'open', :base => branch_name)
 
 pull_requests.each do |pull|
+    next unless users.any?(pull.user.login)
     puts "Checking status of #{pull.title}"
     status = client.combined_status(repo_name, pull.head.ref)
-    if status.state == "success" and users.any?(pull.user.login)
+    if status.state == "success"
         puts "Merging #{pull.title}"
 	    client.merge_pull_request(repo_name, pull.number, commit_message = '', :merge_method => 'rebase')
     end
